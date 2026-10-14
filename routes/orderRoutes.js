@@ -9,7 +9,7 @@ const {
   deleteOrder,
 } = require('../controllers/orderController');
 
-router.get('/', getAllOrders);
+router.get(['/', ''], getAllOrders);
 router.get('/create', getCreateOrder);
 router.post('/create', postCreateOrder);
 router.get('/:id/update', getUpdateOrder);

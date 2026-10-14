@@ -21,7 +21,20 @@ mongoose
   .catch((err) => console.error('MongoDB connection error:', err));
 
 // Routes
+app.get('/', (req, res) => res.redirect('/orders'));
 app.use('/orders', orderRoutes);
+
+// 404 handler
+app.use((req, res) => {
+  console.log('404 - Not found:', req.method, req.url);
+  res.status(404).send(`Cannot ${req.method} ${req.url}`);
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error('Error:', err.message, err.stack);
+  res.status(500).send(`Error: ${err.message}`);
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
