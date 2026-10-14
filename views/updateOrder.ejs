@@ -37,11 +37,16 @@
       <input type="number" name="quantity" value="<%= order.quantity %>" min="1" required />
 
       <label>Order Date</label>
-      <input type="date" name="orderDate" value="<%= new Date(order.orderDate).toISOString().split('T')[0] %>" required />
+      <input type="date" name="orderDate" id="orderDate" value="<%= new Date(order.orderDate).toISOString().split('T')[0] %>" required />
 
       <button type="submit" class="btn-submit">Update Order</button>
     </form>
     <a href="/orders"><button class="btn-back">Go Back</button></a>
   </div>
+  <script>
+    // Set min date to today (prevent past dates)
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('orderDate').min = today;
+  </script>
 </body>
 </html>

@@ -36,11 +36,17 @@
       <input type="number" name="quantity" placeholder="Enter quantity" min="1" required />
 
       <label>Order Date</label>
-      <input type="date" name="orderDate" required />
+      <input type="date" name="orderDate" id="orderDate" required />
 
       <button type="submit" class="btn-submit">Place Order</button>
     </form>
     <a href="/orders"><button class="btn-back">Go Back</button></a>
   </div>
+  <script>
+    // Set min date to today (prevent past dates)
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('orderDate').min = today;
+    document.getElementById('orderDate').value = today;
+  </script>
 </body>
 </html>

@@ -26,6 +26,18 @@ const postCreateOrder = async (req, res) => {
   try {
     const { customerName, productName, quantity, orderDate } = req.body;
 
+    // Validate: không cho phép ngày trong quá khứ
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = new Date(orderDate);
+    if (selectedDate < today) {
+      const products = await Product.find();
+      return res.render('createOrder', {
+        products,
+        error: 'Order date cannot be in the past.',
+      });
+    }
+
     // Constraint: chi order san pham da ton tai trong he thong
     const product = await Product.findOne({ productName });
     if (!product) {
@@ -70,6 +82,20 @@ const getUpdateOrder = async (req, res) => {
 const postUpdateOrder = async (req, res) => {
   try {
     const { customerName, productName, quantity, orderDate } = req.body;
+
+    // Validate: không cho phép ngày trong quá khứ
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = new Date(orderDate);
+    if (selectedDate < today) {
+      const order = await Order.findById(req.params.id);
+      const products = await Product.find();
+      return res.render('updateOrder', {
+        order,
+        products,
+        error: 'Order date cannot be in the past.',
+      });
+    }
 
     const product = await Product.findOne({ productName });
     if (!product) {
